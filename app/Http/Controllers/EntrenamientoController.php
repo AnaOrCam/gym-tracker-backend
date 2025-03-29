@@ -40,4 +40,20 @@ class EntrenamientoController extends Controller
  
          return response()->json($workout);
      }
+     public function update(Request $request,$id){
+        $workout = Entrenamiento::findOrFail($id);
+         if (!$workout) {
+            return response()->json(['message' => 'Workout not found'], 404);
+        }
+         $workout->update($request->all());
+         return response()->json($workout);
+     }
+     public function destroy($id){
+        $workout=Entrenamiento::find($id);
+        if (!$workout) {
+            return response()->json(['message' => 'Workout not found'], 404);
+        }
+        $workout->delete();
+        return response()->json(['message'=>'Deleted'],200);
+     }
 }
