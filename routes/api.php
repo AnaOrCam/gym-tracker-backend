@@ -32,3 +32,7 @@ Route::post('/workouts', [EntrenamientoController::class, 'store']);
 Route::get('/workouts', [EntrenamientoController::class, 'index']);
 Route::get('/workouts/{id}', [EntrenamientoController::class, 'show']);
 Route::delete('/workouts/{id}', [EntrenamientoController::class, 'destroy']);
+Route::get('/workouts/user/{idUser}',[EntrenamientoController::class,'getWorkoutsByUser']);
+Route::get('/workouts/user/{idUser}/type/{type}',[EntrenamientoController::class,'getWorkoutsByUserAndType']);
+Route::get('/workouts/user/{idUser}/train/{train}',[EntrenamientoController::class,'getWorkoutsByUserAndTrain']);
+

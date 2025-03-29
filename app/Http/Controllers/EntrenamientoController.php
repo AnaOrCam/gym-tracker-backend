@@ -56,4 +56,27 @@ class EntrenamientoController extends Controller
         $workout->delete();
         return response()->json(['message'=>'Deleted'],200);
      }
+     public function getWorkoutsByUser($idUser){
+        $workouts=Entrenamiento::where('user_id',$idUser)->get();
+        if (!$workouts) {
+            return response()->json(['message' => 'Workouts not found for that user'], 404);
+        }
+        return response()->json($workouts,200);
+     }
+     public function getWorkoutsByUserAndType($idUser,$type){
+        $workouts=Entrenamiento::where('type',$type)->where('user_id',$idUser)->get();
+        if ($workouts->isEmpty()) { // Corregido
+            return response()->json(['message' => 'Workouts not found for that user and type'], 404);
+        }
+        return response()->json($workouts,200);
+     }
+     public function getWorkoutsByUserAndTrain($idUser,$train){
+        $workouts=Entrenamiento::where('train',$train)->where('user_id',$idUser)->get();
+        if ($workouts->isEmpty()) { // Corregido
+            return response()->json(['message' => 'Workouts not found for that user and train'], 404);
+        }
+        return response()->json($workouts,200);
+     }
+
+
 }
