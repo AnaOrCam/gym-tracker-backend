@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Entrenamiento extends Model
 {
     use HasFactory;
+    protected $fillable=['name','type','train','weekday','user_id','created_at','updated_at'];
+    protected $updatable=['name','type','train','weekday','user_id','created_at','updated_at'];
+
 }
