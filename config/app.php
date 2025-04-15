@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
 return [
+    'frontend_url' => env('FRONTEND_URL', 'http://localhost:4200'),
+
 
     /*
     |--------------------------------------------------------------------------
