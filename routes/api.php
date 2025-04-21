@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\EntrenamientoController;
+use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WorkoutExerciseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -43,4 +45,15 @@ Route::delete('/workouts/{id}', [EntrenamientoController::class, 'destroy']);
 Route::get('/workouts/user/{idUser}',[EntrenamientoController::class,'getWorkoutsByUser']);
 Route::get('/workouts/user/{idUser}/type/{type}',[EntrenamientoController::class,'getWorkoutsByUserAndType']);
 Route::get('/workouts/user/{idUser}/train/{train}',[EntrenamientoController::class,'getWorkoutsByUserAndTrain']);
+
+
+// Ejercicios
+Route::apiResource('exercises', ExerciseController::class);
+
+// Relación Workout-Ejercicios
+Route::apiResource('workout-exercises', WorkoutExerciseController::class);
+
+// Personalizadas
+Route::get('/workouts/{workoutId}/exercises', [WorkoutExerciseController::class, 'getExercisesByWorkout']);
+Route::get('/exercises/{exerciseId}/workouts', [WorkoutExerciseController::class, 'getWorkoutsByExercise']);
 
