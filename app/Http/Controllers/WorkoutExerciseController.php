@@ -64,18 +64,20 @@ class WorkoutExerciseController extends Controller
         return response()->json(['message' => 'Deleted'], 200);
     }
     // Obtener todos los ejercicios de un entrenamiento específico
-    public function getExercisesByWorkout($workoutId)
-    {
-        $relations = WorkoutExercise::where('entrenamiento_id', $workoutId)
-            ->with('exercise')
-            ->get();
+public function getExercisesByWorkout($workoutId)
+{
+    // Trae todas las relaciones entre WorkoutExercise y Exercise, incluyendo todos los campos de Exercise
+    $relations = WorkoutExercise::where('entrenamiento_id', $workoutId)
+        ->with('exercise')  // Cargar todo el modelo 'exercise' relacionado
+        ->get();
 
-        if ($relations->isEmpty()) {
-            return response()->json(['message' => 'No exercises found for that workout'], 404);
-        }
-
-        return response()->json($relations, 200);
+    if ($relations->isEmpty()) {
+        return response()->json(['message' => 'No exercises found for that workout'], 404);
     }
+
+    return response()->json($relations, 200);
+}
+
 
     // Obtener todos los entrenamientos donde aparece un ejercicio específico
     public function getWorkoutsByExercise($exerciseId)

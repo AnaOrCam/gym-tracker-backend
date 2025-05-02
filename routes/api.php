@@ -37,6 +37,9 @@ Route::post('/reset-password', [ResetPasswordController::class, 'reset']);
 
 
 //Rutas entrenamientos
+Route::post('/workouts/full', [EntrenamientoController::class, 'storeWithExercises']);
+
+
 Route::patch('/workouts/{id}', [EntrenamientoController::class, 'update']);
 Route::post('/workouts', [EntrenamientoController::class, 'store']);
 Route::get('/workouts', [EntrenamientoController::class, 'index']);
