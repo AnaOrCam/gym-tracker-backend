@@ -30,20 +30,20 @@ class EntrenamientoController extends Controller
             'exercises.*.reps' => 'required|integer',
             'exercises.*.weight' => 'required|numeric',
         ]);
-        
+
         DB::beginTransaction();
-        
+
         try {
             // Crear el workout desde $validated['workout']
             $workout = Entrenamiento::create($validated['workout']);
-        
+
             // Crear ejercicios
             foreach ($validated['exercises'] as $exerciseData) {
                 $exercise = Exercise::create([
                     'name' => $exerciseData['name'],
                     'description' => $exerciseData['description'],
                 ]);
-        
+
                 WorkoutExercise::create([
                     'entrenamiento_id' => $workout->id,
                     'exercise_id' => $exercise->id,
@@ -52,15 +52,14 @@ class EntrenamientoController extends Controller
                     'weight' => $exerciseData['weight'],
                 ]);
             }
-        
+
             DB::commit();
-        
+
             return response()->json(['message' => 'Entrenamiento y ejercicios creados correctamente'], 201);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['error' => 'Error al guardar los datos', 'message' => $e->getMessage()], 500);
         }
-        
     }
 
 
@@ -112,12 +111,21 @@ class EntrenamientoController extends Controller
     }
     public function getWorkoutsByUser($idUser)
     {
-        $workouts = Entrenamiento::where('user_id', $idUser)->get();
-        if (!$workouts) {
+        // Cargar los entrenamientos y los ejercicios asociados a través de WorkoutExercise
+        $workouts = Entrenamiento::where('user_id', $idUser)
+            ->with('workoutExercises.exercise') // Cargar WorkoutExercise y luego el ejercicio relacionado
+            ->get();
+
+        // Verificar si no se encontraron entrenamientos
+        if ($workouts->isEmpty()) {
             return response()->json(['message' => 'Workouts not found for that user'], 404);
         }
+
+        // Retornar los entrenamientos con los ejercicios asociados
         return response()->json($workouts, 200);
     }
+
+
     public function getWorkoutsByUserAndType($idUser, $type)
     {
         $workouts = Entrenamiento::where('type', $type)->where('user_id', $idUser)->get();

@@ -26,4 +26,8 @@ class WorkoutExercise extends Model
     {
         return $this->belongsTo(Entrenamiento::class);
     }
+    public function exerciseLogs()
+    {
+        return $this->hasMany(ExerciseLog::class);
+    }
 }

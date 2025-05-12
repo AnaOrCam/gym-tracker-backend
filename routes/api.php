@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EntrenamientoController;
 use App\Http\Controllers\ExerciseController;
+use App\Http\Controllers\ExerciseLogController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\UserController;
@@ -60,3 +61,9 @@ Route::apiResource('workout-exercises', WorkoutExerciseController::class);
 Route::get('/workouts/{workoutId}/exercises', [WorkoutExerciseController::class, 'getExercisesByWorkout']);
 Route::get('/exercises/{exerciseId}/workouts', [WorkoutExerciseController::class, 'getWorkoutsByExercise']);
 
+
+//Logs
+Route::get('/workout-exercises/{workout_exercise}/logs', [ExerciseLogController::class, 'index']); 
+Route::post('/exercise-log', [ExerciseLogController::class, 'store']);
+Route::patch('/exercise-logs/{exercise_log}', [ExerciseLogController::class, 'update']); 
+Route::delete('/exercise-logs/{exercise_log}', [ExerciseLogController::class, 'destroy']); 
