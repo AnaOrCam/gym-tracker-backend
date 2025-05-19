@@ -25,7 +25,7 @@ class ResetPasswordNotification extends Notification
 
     public function toMail($notifiable)
     {
-        $url = $this->url ?? "http://localhost:4200/auth/reset-password/{$this->token}?email=" . urlencode($notifiable->getEmailForPasswordReset());
+        $url = $this->url ?? "https://gym-tracker-black-delta.vercel.app/auth/reset-password/{$this->token}?email=" . urlencode($notifiable->getEmailForPasswordReset());
     
         return (new MailMessage)
             ->subject('Recuperación de contraseña')
